@@ -1,9 +1,7 @@
 package main
 
 import (
-	//"bufio"
-	//"log"
-	//"os"
+	"fmt"
 	"regexp"
 )
 
@@ -33,47 +31,23 @@ func validateIPv6(line string) (bool, error) {
 	}
 }
 
-/*
 func main() {
-	// opening of a log file
-	logFile, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
+
+	var ip string
+	fmt.Scanf("%s", &ip)
+
+	checkIPv4, errIPv4 := validateIPv4(ip)
+	checkIPv6, errIPv6 := validateIPv6(ip)
+
+	if errIPv4 != nil {
+		fmt.Println(errIPv4)
+	} else if checkIPv4 {
+		fmt.Println("validIPv4")
+	} else if errIPv6 != nil {
+		fmt.Println(errIPv6)
+	} else if checkIPv6 {
+		fmt.Println("validIPv6")
+	} else {
+		fmt.Println("invalidIP")
 	}
-	log.SetOutput(logFile)
-
-	log.Println("############### IP VALIDATION LINE BY LINE ###############")
-
-	// opening of file to be read
-	fileToRead, ferr := os.Open("ipTestcases.txt")
-	if ferr != nil {
-		log.Fatal(ferr)
-	}
-	defer fileToRead.Close()
-
-	scanner := bufio.NewScanner(fileToRead)
-	var lineNum, countIPv4, countIPv6 int = 0, 0, 0
-
-	for scanner.Scan() {
-		// reading file line by line
-		line := scanner.Text()
-		lineNum++
-
-		if validateIPv4(line) {
-			countIPv4++
-			log.Printf("Line : %d - valid IPv4\n", lineNum)
-		} else if validateIPv6(line) {
-			countIPv6++
-			log.Printf("Line : %d - valid IPv6\n", lineNum)
-		} else {
-			log.Printf("Line : %d - invalid IP\n", lineNum)
-		}
-	}
-
-	log.Println("------------ RESULTS ------------")
-	log.Printf("Number of lines checked : %d\n", lineNum)
-	log.Printf("Number of valid IPv4 : %d\n", countIPv4)
-	log.Printf("Number of valid IPv6 : %d\n", countIPv6)
-	log.Printf("Number of invalid IP : %d\n", lineNum-countIPv4-countIPv6)
-
-}*/
+}
