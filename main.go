@@ -1,38 +1,39 @@
 package main
 
 import (
-	"bufio"
-	"log"
-	"os"
+	//"bufio"
+	//"log"
+	//"os"
 	"regexp"
 )
 
 // validateIPv4 function to check a given string is valid ipv4 or not.
-func validateIPv4(line string) bool {
+func validateIPv4(line string) (bool, error) {
 	ipv4, err := regexp.Compile(`^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$`)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	if ipv4.MatchString(line) {
-		return true
+		return true, err
 	} else {
-		return false
+		return false, err
 	}
 }
 
 // validateIPv6 function to check a given string is valid ipv6 or not.
-func validateIPv6(line string) bool {
+func validateIPv6(line string) (bool, error) {
 	ipv6, err := regexp.Compile(`^((([0-9a-fA-F]){1,4})\:){7}([0-9a-fA-F]){1,4}$`)
 	if err != nil {
-		log.Fatal(err)
+		return false, err
 	}
 	if ipv6.MatchString(line) {
-		return true
+		return true, err
 	} else {
-		return false
+		return false, err
 	}
 }
 
+/*
 func main() {
 	// opening of a log file
 	logFile, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
@@ -75,4 +76,4 @@ func main() {
 	log.Printf("Number of valid IPv6 : %d\n", countIPv6)
 	log.Printf("Number of invalid IP : %d\n", lineNum-countIPv4-countIPv6)
 
-}
+}*/
